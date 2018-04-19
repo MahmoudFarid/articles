@@ -2,10 +2,14 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as AuthUserAdmin
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from django.contrib.auth.models import Group
+from django.utils.translation import ugettext_lazy as _
+
 from .models import User
 
 
 class MyUserChangeForm(UserChangeForm):
+    groups = forms.ModelMultipleChoiceField(Group.objects.all(), widget=forms.CheckboxSelectMultiple(),)
 
     class Meta(UserChangeForm.Meta):
         model = User
@@ -34,6 +38,10 @@ class MyUserCreationForm(UserCreationForm):
 class MyUserAdmin(AuthUserAdmin):
     form = MyUserChangeForm
     add_form = MyUserCreationForm
-    fieldsets = (("User Profile", {"fields": ("name",)}),) + AuthUserAdmin.fieldsets
-    list_display = ("username", "name", "is_superuser")
-    search_fields = ["name"]
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'groups')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser')}),
+    )
+    list_display = ('username', 'is_superuser', 'is_staff')
+    search_fields = ['username']
