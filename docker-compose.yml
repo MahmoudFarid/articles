@@ -1,0 +1,25 @@
+version: '2'
+
+volumes:
+  postgres_data: {}
+  postgres_backups: {}
+
+services:
+  postgres:
+    build: ./compose/postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_backups:/backups
+
+  redis:
+    image: redis:3.0
+
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile-dev
+    command: /start-dev.sh
+    depends_on:
+     - redis
+     - postgres
+

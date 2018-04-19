@@ -1,33 +1,17 @@
 version: '2'
 
-volumes:
-  postgres_data_local: {}
-  postgres_backup_local: {}
-
 services:
+  postgres:
+    environment:
+      - POSTGRES_USER=efxfGlPFPZCXwoyRsusuHPfmQxzxEiBC
+      - POSTGRES_DB=articles
+
   django:
-    build:
-      context: .
-      dockerfile: ./compose/local/django/Dockerfile
-    image: articles_local_django
-    depends_on:
-      - postgres
     volumes:
       - .:/app
-    env_file:
-      - ./.envs/.local/.django
-      - ./.envs/.local/.postgres
     ports:
       - "8000:8000"
-    command: /start.sh
-
-  postgres:
-    build:
-      context: .
-      dockerfile: ./compose/production/postgres/Dockerfile
-    image: articles_production_postgres
-    volumes:
-      - postgres_data_local:/var/lib/postgresql/data
-      - postgres_backup_local:/backups
-    env_file:
-      - ./.envs/.local/.postgres
+    environment:
+      - POSTGRES_USER=efxfGlPFPZCXwoyRsusuHPfmQxzxEiBC
+      - POSTGRES_DB=articles
+      - USE_DOCKER=yes
