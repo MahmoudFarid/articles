@@ -67,10 +67,14 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework',
+    'django_bleach',
+    'ckeditor',
 ]
 LOCAL_APPS = [
     'articles.users.apps.UsersConfig',
     # Your stuff: custom apps go here
+
+    'articles.blogs',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -211,7 +215,7 @@ EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND', default='django.core.mail.backends.s
 # ADMIN
 # ------------------------------------------------------------------------------
 # Django Admin URL regex.
-ADMIN_URL = r'^admin/'
+ADMIN_URL = r'admin/'
 # https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = [
     ("""Mahmoud Farid""", 'mahmoud.farid.94@gmail.com'),
@@ -229,5 +233,26 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_REQUIRED = True
 
 
-# Your stuff...
+# BLEACH Configurations
 # ------------------------------------------------------------------------------
+BLEACH_ALLOWED_TAGS = ['div', 'p', 'b', 'i', 'u', 'em', 'strong', 'a', 'blockquote', 'del', 'span',
+                       'img', 'strong', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'br', 'code', 'big']
+
+# Which HTML attributes are allowed
+BLEACH_ALLOWED_ATTRIBUTES = ['href', 'title', 'style', 'src', 'class', 'data-ride',
+                             'data-slide', 'role', 'dir']
+
+# Which CSS properties are allowed in 'style' attributes (assuming style is
+# an allowed attribute)
+BLEACH_ALLOWED_STYLES = [
+    'font-size', 'font-family', 'font-weight', 'text-decoration', 'display', 'text-align', 'font-variant', 'width']
+
+# Strip unknown tags if True, replace with HTML escaped characters if False
+BLEACH_STRIP_TAGS = True
+
+# Strip HTML comments, or leave them in.
+BLEACH_STRIP_COMMENTS = False
+
+# CKeditor
+# ------------------------------------------------------------------------------
+CKEDITOR_UPLOAD_PATH = "uploads/"
