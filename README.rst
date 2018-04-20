@@ -37,6 +37,7 @@ To open bash to create super user or excute any manage.py commands:
 To make fast migration instead of opening bash:
 
     $ make makemigrations
+
     $ make migrate
 
 To allow debugging in development with ipdb, run server with this command:
@@ -50,8 +51,8 @@ I used make instead of docker-compose because Makefile is a simple way to organi
 Running Locally
 ^^^^^^^^^^^^^^^
 
-1- create a virtualenv_.
-.. _virtualenv: http://docs.python-guide.org/en/latest/dev/virtualenvs/
+1- create a `virtualenv`_.
+.. _`virtualenv`: http://docs.python-guide.org/en/latest/dev/virtualenvs/
 
 2- Activate the virtualenv you have just created.
 
