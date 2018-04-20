@@ -41,6 +41,10 @@ To make fast migration instead of opening bash:
 
     $ make migrate
 
+To run unittests:
+
+    $ make test
+
 To allow debugging in development with ipdb, run server with this command:
 
     $ make debug django

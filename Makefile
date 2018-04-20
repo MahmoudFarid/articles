@@ -7,6 +7,9 @@ build:
 shell:
 	docker-compose -f docker-compose.yml -f local.yml exec django /entrypoint.sh ./manage.py shell_plus
 
+test:
+	docker-compose -f docker-compose.yml -f local.yml exec django /entrypoint.sh ./manage.py test
+
 bash:
 	docker-compose -f docker-compose.yml -f local.yml exec django /entrypoint.sh bash
 
