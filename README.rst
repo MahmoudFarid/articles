@@ -14,10 +14,10 @@ Using Docker
 ^^^^^^^^^^^^
 
 * Docker; if you don’t have it yet, follow the installation_instructions_.
-.. _installation_instructions_: https://docs.docker.com/install/#supported-platforms
+.. _installation_instructions: https://docs.docker.com/install/#supported-platforms
 
-* Docker Compose; ; refer to the official documentation for the installation_guilde_.
-.. _installation_guilde_: https://docs.docker.com/compose/install/
+* Docker Compose; refer to the official documentation for the installation_guilde_.
+.. _installation_guilde: https://docs.docker.com/compose/install/
 
 
 Then you can build the environment, this can take a while especially the first time you run this particular command on your development system:
@@ -51,9 +51,10 @@ Running Locally
 ^^^^^^^^^^^^^^^
 
 1- create a virtualenv_.
-.. _virtualenv_: http://docs.python-guide.org/en/latest/dev/virtualenvs/
+.. _virtualenv: http://docs.python-guide.org/en/latest/dev/virtualenvs/
 
 2- Activate the virtualenv you have just created.
+
 3- Install development requirements:
 
     $ pip install -r requirements/local.txt
