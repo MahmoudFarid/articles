@@ -28,6 +28,10 @@
     
     {% endblock %}
 
+    {% block extra_css %}
+      
+    {% endblock extra_css %}
+
   </head>
 
   <body>
@@ -37,14 +41,32 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="{% url 'home' %}">articles</a>
+        <a class="navbar-brand" href="{% url 'home' %}">Articles App</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'about' %}">About</a>
+              <a class="nav-link" href="{% url 'blogs:approved' %}">Blogs</a>
             </li>
             {% if request.user.is_authenticated %}
+              {% if 'users.can_write_blogs' in perms %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'blogs:list' %}">Open Blogs</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'blogs:list_user_blog' %}">My Blogs</a>
+                </li>
+              {% endif %}
+
+              {% if 'users.can_review_blogs' in perms %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'blogs:list_to_reassign' %}">Reassign User</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'blogs:need_approval' %}">Need Approved</a>
+                </li>
+              {% endif %}
+
               <li class="nav-item">
                 {# URL provided by django-allauth/account/urls.py #}
                 <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
@@ -70,7 +92,11 @@
       {% endif %}
 
       {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
+        {% if request.user.is_authenticated %}
+          <p>Home Page!</p>
+        {% else %}
+          <p>You nead to sign in to show the Articles link!</p>
+        {% endif %}
       {% endblock content %}
 
     </div> <!-- /container -->
@@ -96,6 +122,10 @@
       
 
     {% endblock javascript %}
+
+    {% block extra_js %}
+      
+    {% endblock extra_js %}
   </body>
 </html>
  
