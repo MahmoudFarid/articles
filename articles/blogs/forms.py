@@ -1,9 +1,11 @@
 from django import forms
-from django.utils.translation import ugettext_lazy as _
 
 from ckeditor.widgets import CKEditorWidget
 
 from .models import Blog
+from .error_messages import (INVALID_GOOGLE_DOC_URL, INVALID_KEY_IN_GOOGLE_DOC_URL,
+                             INVALID_STATUS_WHEN_REASSIGN_BLOG_USER)
+from .utils import get_google_doc_key
 
 
 class UpdateBlogForm(forms.ModelForm):
@@ -18,11 +20,11 @@ class UpdateBlogForm(forms.ModelForm):
         gdoc_link = self.cleaned_data.get('gdoc_link')
 
         if 'docs.google.com/document/d/' not in gdoc_link:
-            raise forms.ValidationError(_('It should be Google Doc URL!'))
+            raise forms.ValidationError(INVALID_GOOGLE_DOC_URL)
 
-        key = gdoc_link.split('/d/')[1].split('/')[0]
+        key = get_google_doc_key(gdoc_link)
         if len(key) != 44:
-            raise forms.ValidationError(_("The key should be 44 as a length, it's only {}!".format(len(key))))
+            raise forms.ValidationError(INVALID_KEY_IN_GOOGLE_DOC_URL.format(len(key)))
 
         return gdoc_link
 
@@ -39,3 +41,7 @@ class ReassignBlogUserForm(forms.ModelForm):
     class Meta:
         model = Blog
         fields = ('user',)
+
+    def clean(self):
+        if self.instance.status == Blog.APPROVED or self.instance.status == Blog.IN_REVIEW:
+            raise forms.ValidationError(INVALID_STATUS_WHEN_REASSIGN_BLOG_USER)

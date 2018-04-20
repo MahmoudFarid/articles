@@ -55,7 +55,7 @@ class UpdateBlogView(PermissionRequiredMixin, UpdateView):
     success_url = reverse_lazy('blogs:list_user_blog')
 
     def form_valid(self, form):
-        if 'review' in form.data:
+        if 'review' in self.request.POST:
             blog = form.save(commit=False)
             blog.status = Blog.IN_REVIEW
         return super(UpdateBlogView, self).form_valid(form)
