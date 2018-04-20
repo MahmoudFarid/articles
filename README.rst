@@ -1,77 +1,93 @@
-articles
-========
+Articles App
+============
 
-Awesome articles
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
      :alt: Built with Cookiecutter Django
 
 
-:License: MIT
+Setting Up Development Environment
+----------------------------------
+
+Using Docker
+^^^^^^^^^^^^
+
+* Docker; if you don’t have it yet, follow the installation_instructions_.
+.. _installation_instructions_: https://docs.docker.com/install/#supported-platforms
+
+* Docker Compose; ; refer to the official documentation for the installation_guilde_.
+.. _installation_guilde_: https://docs.docker.com/compose/install/
 
 
-Settings
---------
+Then you can build the environment, this can take a while especially the first time you run this particular command on your development system:
 
-Moved to settings_.
+    $ make build
 
-.. _settings: http://cookiecutter-django.readthedocs.io/en/latest/settings.html
+That's it!
 
-Basic Commands
---------------
+To run server normally at anytime, just run this command:
 
-Setting Up Your Users
-^^^^^^^^^^^^^^^^^^^^^
+    $ make up
 
-* To create a **normal user account**, just go to Sign Up and fill out the form. Once you submit it, you'll see a "Verify Your E-mail Address" page. Go to your console to see a simulated email verification message. Copy the link into your browser. Now the user's email should be verified and ready to go.
+To open bash to create super user or excute any manage.py commands:
 
-* To create an **superuser account**, use this command::
+    $ make bash
 
-    $ python manage.py createsuperuser
+To make fast migration instead of opening bash:
 
-For convenience, you can keep your normal user logged in on Chrome and your superuser logged in on Firefox (or similar), so that you can see how the site behaves for both kinds of users.
+    $ make makemigrations
+    $ make migrate
 
-Test coverage
-^^^^^^^^^^^^^
+To allow debugging in development with ipdb, run server with this command:
 
-To run the tests, check your test coverage, and generate an HTML coverage report::
-
-    $ coverage run manage.py test
-    $ coverage html
-    $ open htmlcov/index.html
-
-Running tests with py.test
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-  $ py.test
-
-Live reloading and Sass CSS compilation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Moved to `Live reloading and SASS compilation`_.
-
-.. _`Live reloading and SASS compilation`: http://cookiecutter-django.readthedocs.io/en/latest/live-reloading-and-sass-compilation.html
+    $ make debug django
 
 
+I used make instead of docker-compose because Makefile is a simple way to organize code compilation also it make it more easier than docker-compose.
 
 
+Running Locally
+^^^^^^^^^^^^^^^
 
-Deployment
-----------
+1- create a virtualenv_.
+.. _virtualenv_: http://docs.python-guide.org/en/latest/dev/virtualenvs/
 
-The following details how to deploy this application.
+2- Activate the virtualenv you have just created.
+3- Install development requirements:
 
+    $ pip install -r requirements/local.txt
 
+4- Configure your DB, to make it easily you can change the DB to be sqlite3 instead of postgresql django_doc_.
+.. _django_doc_: https://docs.djangoproject.com/en/2.0/ref/settings/#s-databases
 
-Docker
-^^^^^^
+5- Apply Migrations
 
-See detailed `cookiecutter-django Docker documentation`_.
+    $ ./manage.py migrate
 
-.. _`cookiecutter-django Docker documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html
+6- Run server
+
+    $ ./manage.py runserver
 
 
 
+Full Scenario in this project
+-----------------------------
+
+* Once DB is created, you will find in admin page two groups with it's custom permission **Writer** and **Editor**.
+
+* You can create any user from admin page and add him to any group to get the permissions for this user.
+
+* Any user can login in the project and depends on his permission the blog links will appear to him.
+
+* You will find in the admin page 'Blog' which you can add the title and description of the blog to let writers start writing the content of the blog.
+
+* Any blog doesn't relate with writer, will be shown in **Open Blogs** page, which writers can assign any article from this page to themself to start writing the content.
+
+* Writer can see all his blogs in **My Blogs** page, which he can update the blog with the content and add the link for Google doc to draft this blog. Then this blog will change it's status from Draft to be In-Review.
+
+* Editor can see all blogs with In-Review status in **Need Approved** page, which he can review the blog and take an action either accept or reject the blog. If the blog is rejected, the writer can update it again and submit for review. If the blog is accpeted, the writer can't update it again and it will be published.
+
+* Editor can also reassign blogs from one writer to another one in **Reassign Blogs** page, which he will see all (Draft or Reject) blogs that already related by writer.
+
+* **Blogs** page, will list all accepted blogs and this page visible to all users whether they are authorized or not.
