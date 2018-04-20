@@ -1,6 +1,7 @@
 Articles App
 ============
 
+This app to let Writers to add articles and link it with google doc to draft it, Also let Editos to review these articles and choose which one will be Accepted to publish or Reject to return back to Writer to edit on it.
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
