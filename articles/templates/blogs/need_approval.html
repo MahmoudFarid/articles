@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load bleach_tags %}
+
+{% block content %}
+<div class="col-md-12">
+  {% if blogs %}
+    <div class="responsive-table">
+      <table class="table table-hover active">
+        <tbody>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+          {% for blog in blogs %}
+          <tr>
+            <td><a href='{% url "blogs:details" blog.pk %}'>{{ blog.title }}</a></td>
+            <td>{{ blog.get_status_display }}</td>
+            <td>
+              <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm">Action</button>
+                <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <form method="post" action='{% url "blogs:approval_action" blog.pk %}'>
+                    {% csrf_token %}
+                    <li><button type="submit" name="status" value={{blog.APPROVED}}>Approve</button></li>
+                    <li><button type="submit" name="status" value={{blog.REJECTED}}>Rejected</button></li>
+                  </form>
+                </ul>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      There isn't any blogs now!
+    </div>
+  {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load bleach_tags %}
+
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-6">
+      <div id="postlist">
+        <div class="panel">
+          <div class="panel-heading">
+            <div class="text-center">
+              <div class="row">
+                <div class="col-sm-9">
+                  <h2 class="pull-left">{{ blog.title }}</h2>
+                </div>
+                <div class="col-sm-3">
+                  <h4 class="pull-right">
+                    <small><em>{{ blog.created|date:"d/m/Y" }}<br>{{ blog.get_status_display }}</em></small>
+                  </h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {% if blog.status != blog.DRAFT %}
+            <div class="panel-body">
+                {{ blog.content|bleach }}
+            </div>
+            {% if 'users.can_write_blogs' in perms or 'users.can_review_blogs' in perms %}
+              <div class="panel-footer">
+                <a href="{{ blog.gdoc_link }}">Google Doc Link</a>
+              </div>
+            {% endif %}
+          {% else %}
+            <div class="panel-body">
+              {{ blog.description }}
+            </div>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock content %}
+
+
+{% block extra_js %}
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+{% endblock extra_js %}
