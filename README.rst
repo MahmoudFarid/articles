@@ -51,8 +51,7 @@ I used make instead of docker-compose because Makefile is a simple way to organi
 Running Locally
 ^^^^^^^^^^^^^^^
 
-1- create a `virtualenv`_.
-.. _`virtualenv`: http://docs.python-guide.org/en/latest/dev/virtualenvs/
+1- create a virtualenv.
 
 2- Activate the virtualenv you have just created.
 
