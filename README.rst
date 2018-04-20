@@ -51,8 +51,7 @@ I used make instead of docker-compose because Makefile is a simple way to organi
 Running Locally
 ^^^^^^^^^^^^^^^
 
-1- create a `virtualenv`_.
-.. _`virtualenv`: http://docs.python-guide.org/en/latest/dev/virtualenvs/
+1- create a virtualenv.
 
 2- Activate the virtualenv you have just created.
 
@@ -60,8 +59,8 @@ Running Locally
 
     $ pip install -r requirements/local.txt
 
-4- Configure your DB, to make it easily you can change the DB to be sqlite3 instead of postgresql `Django Doc`_.
-.. _`Django Doc`: https://docs.djangoproject.com/en/2.0/ref/settings/#s-databases
+4- Configure your DB, to make it easily you can change the DB to be sqlite3 instead of postgresql Django Doc.
+.. https://docs.djangoproject.com/en/2.0/ref/settings/#s-databases
  
 5- Apply Migrations
 
